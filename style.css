@@ -1,4 +1,25 @@
-article {
-    max-width: 65ch;
-    margin-inline: auto;
+main {
+  display: grid;
+  grid-auto-columns: 1fr 2fr 1fr;
+  grid-template-areas: "sidebar main sidebar";
 }
+
+article {
+  display: grid;
+  max-width: 65ch;
+  grid-area: main;
+}
+
+/* img {
+  width: 65ch;    
+  height: auto;
+}
+
+blockquote {
+  border-left: 4px solid #ccc;
+  border-right: 4px solid #ccc;
+  margin-left: -1em;
+  padding-left: 1em;
+  color: #666;
+  font-style: italic;
+} */
