@@ -16,5 +16,94 @@ const { cardContent } = Astro.props;
 <style>
   ul {
     list-style: none;
+    /* padding: 0; */
+  }
+
+  :root {
+    --content-width: 50rem;
+    --scroll-padding: max(1rem, 50% - var(--content-width) / 2);
+  }
+
+  main {
+    padding-block: 4rem;
+    display: grid;
+    grid-template-columns:
+      [full-start]
+      1fr
+      [content]
+      minmax(0, var(--content-width))
+      1fr
+      [full-end];
+    gap: 1rem;
+
+    > * {
+      grid-column: content;
+    }
+
+    .full-width {
+      grid-column: full;
+      display: grid;
+      grid-template-columns: inherit;
+      row-gap: 3rem;
+
+      > * {
+        grid-column: content;
+      }
+
+      > ul {
+        scroll-snap-type: x mandatory;
+        grid-column: full;
+        padding-block-end: 1rem;
+
+        li {
+          scroll-snap-align: start;
+        }
+      }
+    }
+  }
+
+  ul {
+    display: flex;
+    gap: var(--card-gap);
+
+    overflow-x: auto; /* Gør det muligt at scrolle horisontalt */
+    padding-inline: var(--scroll-padding); /* Centrerer ul på skærme der er bredere end --content-width */
+    scroll-padding-inline: var(--scroll-padding); /* Sørger for at første og sidste kort kan scrolle helt til kanten */
+
+    li {
+      flex-basis: min(400px, 90%); /* Kortene skal fylde max 400px */
+      flex-shrink: 0;
+      background: #ebebeb;
+      color: #595566;
+      border-radius: 8px;
+      font-size: 1rem;
+      padding: 2.75rem 2.1875rem;
+      align-self: start;
+
+      h3 {
+        font-weight: 700;
+        font-size: 1.5625rem;
+      }
+    }
+  }
+
+  h2,
+  h3 {
+    all: revert;
+    color: #181818;
+    margin-block: 0 0.625rem;
+    line-height: 1.125;
+  }
+
+  h2 {
+    font-size: 2.8125rem;
+  }
+
+  header {
+    color: #595566;
+
+    p {
+      max-inline-size: 67ch;
+    }
   }
 </style>
