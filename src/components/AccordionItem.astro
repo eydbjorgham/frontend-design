@@ -24,9 +24,34 @@ const { id, question, answer, linkBlock } = props;
 </details>
 
 <style>
+  @supports selector(::details-content) {
+    .warning {
+      display: none;
+    }
+  }
+
   details {
     color: hsl(190 30% 12%);
     border-bottom: 1px solid #dadada;
+    /* transition: all 0.5s ease; */
+    inline-size: 65ch;
+
+    @media (prefers-reduced-motion: no-preference) {
+      interpolate-size: allow-keywords;
+    }
+
+    &::details-content {
+    opacity: 0;
+    block-size: 0;
+    overflow-y: clip;
+    transition: content-visibility 0.5s allow-discrete, opacity 0.5s, block-size 0.5s;
+  }
+
+  &[open]::details-content {
+    opacity: 1;
+    block-size: auto;
+  }
+}
 
     summary {
       font-weight: 700;
@@ -34,11 +59,14 @@ const { id, question, answer, linkBlock } = props;
       text-wrap: revert;
       user-select: none;
       cursor: pointer;
+      /* transition: all 0.5s ease;
+      display: flex; */
 
       &::marker,
       &::-webkit-details-marker {
         content: "";
         display: none;
+        justify-self: end;
       }
 
       span {
@@ -75,4 +103,31 @@ const { id, question, answer, linkBlock } = props;
       }
     }
   }
+
+  /* ::details-content {
+    transition:
+      height 0.5s ease,
+      content-visibility 0.5s ease allow-discrete;
+    height: 0;
+    overflow: clip;
+  } */
+
+  /* Browser supports interpolate-size */
+  /* @supports (interpolate-size: allow-keywords) {
+    :root {
+      interpolate-size: allow-keywords;
+    }
+
+    [open]::details-content {
+      height: auto;
+    }
+  } */
+
+  /* Fallback for browsers with no interpolate-size support */
+  /* @supports not (interpolate-size: allow-keywords) {
+    [open]::details-content {
+      height: 150px;
+      overflow-y: scroll; 
+    }
+  } */
 </style>
